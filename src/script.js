@@ -1,25 +1,23 @@
-
-
 function timeout(delay) {
-  const timeoutPromise = new Promise((_, reject) => {
-    setTimeout(() => {
-      reject(new Error('Request timed out'));
-    }, delay);
-  });
+	const timeoutPromise = new Promise(() => {
+		setTimeout(() => {
+			console.log(" === timeout from promise")
+		}, delay)
+	})
 }
 
 function syncStopped() {
-  let a = 0
-  for (let i = 0; i < 100; i++) {
-    a = a + 1
-  }
+	let a = 0
+	for (let i = 0; i < 100; i++) {
+		a = a + 1
+	}
 }
 
 function foo(message, n) {
-  let i = n
-  for (let j = 0; j < i; j++) {
-    console.log(message + " " + j)
-  }
+	let i = n
+	for (let j = 0; j < i; j++) {
+		console.log(message + " " + j)
+	}
 }
 
 //function illegal() {
@@ -27,33 +25,43 @@ function foo(message, n) {
 //}
 
 function main() {
-  console.log("=== start")
+	// All sync calls executes in StartExecution(0)
+	console.log("=== start")
 
-  // illegal()
+// illegal()
 
-  syncStopped()
+	syncStopped()
 
-  setImmediate(() => {
-    console.log("=== hello from immidiate")
-  })
+	timeout(200)
 
-  setTimeout(() => {
-    console.log("timeout first")
-    setTimeout(() => { console.log("timeout inner first") }, 2000)
-    setTimeout(() => { console.log("timeout inner second") }, 2000)
+	setImmediate(() => {
+		console.log("=== hello from immidiate")
+	})
 
-  }, 2000)
+	setTimeout(() => {
+		console.log("timeout first")
+		setTimeout(() => {
+			console.log("timeout inner first")
+		}, 2000)
+		setTimeout(() => {
+			console.log("timeout inner second")
+		}, 2000)
+	}, 2000)
 
-  setTimeout(() => { console.log("timeout second") }, 2000)
+	setTimeout(() => {
+		console.log("timeout second")
+	}, 2000)
 
-  foo(" === this is from function call at ", 2)
+	foo(" === this is from function call at ", 2)
 
-  // Inside microtask execution
-  Promise.resolve().then(() => {
-    console.log(" === inside microtask, mark one")
-  })
+	// Inside microtask execution.
+	// Executes before SpinEventLoopInternal()
+	Promise.resolve().then(() => {
+		console.log(" === inside microtask, mark one")
+	})
 
-  console.log("=== end")
+	console.log("=== end")
 }
 
+// Entry point.
 main()
