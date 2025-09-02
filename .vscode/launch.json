@@ -1,0 +1,21 @@
+{
+    "version": "1.0.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "node",
+            "program": "${workspaceFolder}/node_g",
+            "args": ["explore_debug/src/script.js"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "node inspect",
+            "program": "${workspaceFolder}/node_g",
+            "args": ["inspect", "explore_debug/src/script.js"],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
