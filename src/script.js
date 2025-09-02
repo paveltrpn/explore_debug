@@ -28,7 +28,7 @@ function main() {
 	// All sync calls executes in StartExecution(0)
 	console.log("=== start")
 
-// illegal()
+	// illegal()
 
 	syncStopped()
 
@@ -49,7 +49,10 @@ function main() {
 	}, 2000)
 
 	setTimeout(() => {
-		console.log("timeout second")
+		console.log("timeout, schedule Promise()")
+		Promise.resolve().then(() => {
+			console.log(" === Promise() after timeout")
+		})
 	}, 2000)
 
 	foo(" === this is from function call at ", 2)
@@ -58,6 +61,10 @@ function main() {
 	// Executes before SpinEventLoopInternal()
 	Promise.resolve().then(() => {
 		console.log(" === inside microtask, mark one")
+	})
+
+	Promise.resolve().then(() => {
+		console.log(" === inside microtask, mark two")
 	})
 
 	console.log("=== end")
