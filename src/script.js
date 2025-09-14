@@ -38,6 +38,9 @@ function main() {
         console.log(`iterate range at ${item}`);
     }
 
+    const fooObj = {};
+    fooObj["newProp"] = 100;
+
     syncStopped();
 
     timeout(200);
