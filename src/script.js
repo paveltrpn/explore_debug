@@ -1,25 +1,25 @@
-import { Range } from "./range.js"
-import * as smnp from "./string_mnp.js"
+import { Range } from "./range.js";
+import * as smnp from "./string_mnp.js";
 
 function timeout(delay) {
     const timeoutPromise = new Promise(() => {
         setTimeout(() => {
-            console.log(" === timeout from promise")
-        }, delay)
-    })
+            console.log(" === timeout from promise");
+        }, delay);
+    });
 }
 
 function syncStopped() {
-    let a = 0
+    let a = 0;
     for (let i = 0; i < 100; i++) {
-        a = a + 1
+        a = a + 1;
     }
 }
 
 function foo(message, n) {
-    let i = n
+    let i = n;
     for (let j = 0; j < i; j++) {
-        console.log(message + " " + j)
+        console.log(message + " " + j);
     }
 }
 
@@ -29,54 +29,54 @@ function foo(message, n) {
 
 function main() {
     // All sync calls executes in StartExecution(0)
-    console.log("=== start")
+    console.log("=== start");
 
     // illegal()
 
-    const range = new Range(0, 5, 2)
+    const range = new Range(0, 5, 2);
     for (const item in range) {
-        console.log(`iterate range at ${item}`)
+        console.log(`iterate range at ${item}`);
     }
 
-    syncStopped()
+    syncStopped();
 
-    timeout(200)
+    timeout(200);
 
     setImmediate(() => {
-        console.log("=== hello from immidiate")
-    })
+        console.log("=== hello from immidiate");
+    });
 
     setTimeout(() => {
-        console.log("timeout first")
+        console.log("timeout first");
         setTimeout(() => {
-            console.log("timeout inner first")
-        }, 2000)
+            console.log("timeout inner first");
+        }, 2000);
         setTimeout(() => {
-            console.log("timeout inner second")
-        }, 2000)
-    }, 2000)
+            console.log("timeout inner second");
+        }, 2000);
+    }, 2000);
 
     setTimeout(() => {
-        console.log("timeout, schedule Promise()")
+        console.log("timeout, schedule Promise()");
         Promise.resolve().then(() => {
-            console.log(" === Promise() after timeout")
-        })
-    }, 2000)
+            console.log(" === Promise() after timeout");
+        });
+    }, 2000);
 
-    foo(" === this is from function call at ", 2)
+    foo(" === this is from function call at ", 2);
 
     // Inside microtask execution.
     // Executes before SpinEventLoopInternal()
     Promise.resolve().then(() => {
-        console.log(" === inside microtask, mark one")
-    })
+        console.log(" === inside microtask, mark one");
+    });
 
     Promise.resolve().then(() => {
-        console.log(" === inside microtask, mark two")
-    })
+        console.log(" === inside microtask, mark two");
+    });
 
-    console.log("=== end")
+    console.log("=== end");
 }
 
 // Entry point.
-main()
+main();
